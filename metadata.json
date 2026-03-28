@@ -1,0 +1,5 @@
+{
+  "name": "AI Career Navigator",
+  "description": "An intelligent career guidance system that conducts deep-dive interviews and generates visual, data-driven roadmaps using Gemini AI.",
+  "requestFramePermissions": []
+}
