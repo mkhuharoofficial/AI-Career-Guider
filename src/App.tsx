@@ -119,7 +119,17 @@ export default function App() {
   const [chatInput, setChatInput] = useState('');
   const [chatHistory, setChatHistory] = useState<{ role: 'user' | 'model', parts: { text: string }[] }[]>([]);
   const [isChatLoading, setIsChatLoading] = useState(false);
+  const [missingKey, setMissingKey] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Check if API key is missing
+    const key = (typeof process !== 'undefined' && process.env?.GEMINI_API_KEY) || 
+                (import.meta.env?.VITE_GEMINI_API_KEY);
+    if (!key) {
+      setMissingKey(true);
+    }
+  }, []);
 
   const scrollToBottom = () => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -274,6 +284,12 @@ export default function App() {
               </p>
               
               <div className="w-full max-w-md space-y-4">
+                {missingKey && (
+                  <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm text-center mb-4">
+                    <p className="font-bold mb-1">Missing API Key</p>
+                    <p className="text-xs opacity-70">Please add your GEMINI_API_KEY to your environment variables to use this app on GitHub.</p>
+                  </div>
+                )}
                 <div className="relative">
                   <input
                     type="text"

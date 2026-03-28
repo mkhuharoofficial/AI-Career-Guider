@@ -1,6 +1,12 @@
 import { GoogleGenAI, Type } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || '' });
+// For AI Studio, it uses process.env.GEMINI_API_KEY.
+// For standard Vite (like on GitHub), it uses import.meta.env.VITE_GEMINI_API_KEY.
+const apiKey = (typeof process !== 'undefined' && process.env?.GEMINI_API_KEY) || 
+               (import.meta.env?.VITE_GEMINI_API_KEY) || 
+               '';
+
+const ai = new GoogleGenAI({ apiKey });
 
 export const geminiModel = "gemini-3-flash-preview";
 export const imageModel = "gemini-2.5-flash-image";
